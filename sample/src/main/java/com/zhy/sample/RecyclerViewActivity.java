@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 import com.zhy.base.adapter.recyclerview.DividerItemDecoration;
+import com.zhy.sample.bean.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class RecyclerViewActivity extends AppCompatActivity
 {
 
     private RecyclerView mRecyclerView;
-    private List<String> mDatas = new ArrayList<>();
+    private List<User> mDatas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,23 +34,34 @@ public class RecyclerViewActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
-        mRecyclerView.setAdapter(new CommonAdapter<String>(this, R.layout.item_list, mDatas)
-        {
-            @Override
-            public void convert(ViewHolder holder, String s)
-            {
-                holder.setText(R.id.id_item_list_title, s);
+//        mRecyclerView.setAdapter(new CommonAdapter<String>(this, R.layout.item_list, mDatas)
+//        {
+//            @Override
+//            public void convert(ViewHolder holder, String s)
+//            {
+//                holder.setText(R.id.id_item_list_title, s);
+//
+//            }
+//        });
+       mRecyclerView.setAdapter(new CommonAdapter<User>(this,R.layout.item_list,mDatas) {
+           @Override
+           public void convert(ViewHolder holder, User user) {
+               holder.setText(R.id.id_item_list_title,user.getName());
+               holder.setImageUrl(R.id.iv,user.getUrl());
 
-            }
-        });
+           }
+
+       });
 
     }
 
     private void initDatas()
     {
+
         for (int i = 'A'; i < 'z'; i++)
         {
-            mDatas.add((char) i + "");
+            //mDatas.add((char) i + "","asdas");
+            mDatas.add(new User((char)i+"","http://i9.qhimg.com/dr/270_500_/t01628b7986e6a845b1.jpg"));
         }
     }
 

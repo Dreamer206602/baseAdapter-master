@@ -122,4 +122,32 @@ mRecyclerView.setAdapter(new SectionAdapter<String>(this, R.layout.item_list, mD
 <img src="screenshot/rvadapter_02.png" width="360px"/>
 
 
+在RecyclerView的ViewHolder中添加Glide对网络图片的处理
+```
+public ViewHolder setImageUrl( int viewId, String url) {
+        ImageView imageView = getView(viewId);
+        Glide.with(mContext)
+                .load(url)
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher)
+                .crossFade()
+                .into(imageView);
+        return this;
+    }
+```
+
+在适配器中可以直接这样使用
+```
+ mRecyclerView.setAdapter(new CommonAdapter<User>(this,R.layout.item_list,mDatas) {
+           @Override
+           public void convert(ViewHolder holder, User user) {
+               holder.setText(R.id.id_item_list_title,user.getName());
+               holder.setImageUrl(R.id.iv,user.getUrl());
+
+           }
+
+       });
+```
+
+
 ListView的使用与RecyclerView基本一致，注意ListView对应的类路径为`com.zhy.base.adapter.abslistview`.
